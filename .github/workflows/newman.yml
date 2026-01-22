@@ -1,7 +1,9 @@
-name: Postman API Tests
+name: API Tests - Postman
 
 on:
   push:
+    branches: [ "main" ]
+  pull_request:
     branches: [ "main" ]
 
 jobs:
@@ -9,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout do código
+      - name: Checkout do repositório
         uses: actions/checkout@v4
 
       - name: Instalar Node.js
@@ -20,8 +22,8 @@ jobs:
       - name: Instalar Newman
         run: npm install -g newman
 
-      - name: Executar collection
+      - name: Executar collection Postman
         run: |
           newman run postman/collection.json \
           -e postman/environment.json \
-          --delay-request 400
+          --delay-request 700
