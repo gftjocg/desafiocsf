@@ -12,23 +12,29 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout do repositório
+      - name: Repository Checkout
         uses: actions/checkout@v4
 
-      - name: Instalar Node.js
+      - name: Install Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '18'
 
-      - name: Instalar Newman
+      - name: Install Newman
         run: npm install -g newman
 
-      - name: Instalar Newman Reporter HTML
+      - name: Install Newman Reporter Html
         run: npm install -g newman-reporter-html
 
-      - name: Executar collection Postman
+      - name: Execute Postman Collection
         run: |
           newman run postman/collection.json \
           -e postman/environment.json \
           -r html --reporter-html-export reports/report.html \
           --delay-request 700
+
+      - name: Publish Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: newman-report
+          path: reports/report.html
