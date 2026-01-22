@@ -27,4 +27,5 @@ jobs:
         run: |
           newman run postman/collection.json \
           -e postman/environment.json \
+          -r html --reporter-html-export reports/report.html
           --delay-request 700
