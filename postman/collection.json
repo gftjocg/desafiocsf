@@ -12,7 +12,7 @@
       "name": "login",
       "item": [
         {
-          "name": "login",
+          "name": "Login",
           "event": [
             {
               "listen": "test",
@@ -98,7 +98,7 @@
       "name": "usuarios",
       "item": [
         {
-          "name": "usuarios",
+          "name": "Views Users",
           "event": [
             {
               "listen": "prerequest",
@@ -155,7 +155,7 @@
           "response": []
         },
         {
-          "name": "usuarios",
+          "name": "Create User",
           "event": [
             {
               "listen": "test",
@@ -221,7 +221,7 @@
           "response": []
         },
         {
-          "name": "usuarios/id",
+          "name": "View User By Id",
           "event": [
             {
               "listen": "test",
@@ -268,7 +268,7 @@
           "response": []
         },
         {
-          "name": "usuarios",
+          "name": "Edit User",
           "event": [
             {
               "listen": "test",
@@ -330,7 +330,7 @@
           "response": []
         },
         {
-          "name": "usuarios",
+          "name": "Delete User",
           "event": [
             {
               "listen": "test",
