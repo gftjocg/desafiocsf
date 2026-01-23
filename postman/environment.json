@@ -16,7 +16,7 @@
 		},
 		{
 			"key": "user_login",
-			"value": "jocg8@qa.com.br",
+			"value": "fulano@qa.com",
 			"type": "default",
 			"enabled": true
 		},
@@ -34,13 +34,19 @@
 		},
 		{
 			"key": "user_email",
-			"value": "jocg20@qa.com.br",
+			"value": "jocg21@qa.com.br",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "user_password",
+			"value": "teste",
 			"type": "default",
 			"enabled": true
 		}
 	],
 	"color": null,
 	"_postman_variable_scope": "environment",
-	"_postman_exported_at": "2026-01-22T21:05:09.638Z",
+	"_postman_exported_at": "2026-01-23T11:34:27.464Z",
 	"_postman_exported_using": "Postman/11.81.3"
 }

@@ -201,7 +201,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"nome\": \"Fulano da Silva\",\r\n  \"email\": \"{{user_email}}\",\r\n  \"password\": \"teste\",\r\n  \"administrador\": \"true\"\r\n}",
+              "raw": "{\r\n  \"nome\": \"Fulano da Silva\",\r\n  \"email\": \"{{user_email}}\",\r\n  \"password\": \"{{user_password}}\",\r\n  \"administrador\": \"true\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -309,7 +309,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"nome\": \"Fulano da Silva Souza\",\r\n  \"email\": \"{{user_email}}\",\r\n  \"password\": \"teste\",\r\n  \"administrador\": \"true\"\r\n}",
+              "raw": "{\r\n  \"nome\": \"Fulano da Silva Souza\",\r\n  \"email\": \"{{user_email}}\",\r\n  \"password\": \"{{user_password}}\",\r\n  \"administrador\": \"true\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"

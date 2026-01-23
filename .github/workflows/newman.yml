@@ -7,6 +7,13 @@ on:
     branches: [ "master" ]
 
 
+  workflow_dispatch:
+    inputs:
+      delay_request:
+        description: 'Delay entre requests (ms)'
+        required: false
+        default: '400'
+
 jobs:
   newman-tests:
     runs-on: ubuntu-latest
@@ -31,10 +38,10 @@ jobs:
           newman run postman/collection.json \
           -e postman/environment.json \
           -r html --reporter-html-export reports/report.html \
-          --delay-request 700
+          -delay-request ${{ github.event.inputs.delay_request }}
 
       - name: Publish Report
         uses: actions/upload-artifact@v4
         with:
-          name: newman-report
+          name: report
           path: reports/report.html
