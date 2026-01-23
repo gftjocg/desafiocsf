@@ -254,7 +254,6 @@ Criar um novo usuário no sistema.
 **Pré-requisitos:**
 
 * Valida se as variáveis obrigatórias estão definidas:
-
   * `base_url`
   * `user_name`
   * `user_email`
