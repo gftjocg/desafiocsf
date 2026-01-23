@@ -102,10 +102,15 @@ O arquivo `postman/environment.json` contém as **variáveis necessárias para a
 
 ### Variáveis utilizadas
 
-| Variável    | Descrição                        | Obrigatória            | Como é definida                                                            |
-|-------------| -------------------------------- |------------------------| -------------------------------------------------------------------------- |
-| `base_url`  | URL base da API que será testada | ✅ Sim                  | Via Newman (`--env-var`) ou diretamente no environment para execução local |
-| `jwt_token` | Token de autenticação da API     | ⚠️ Depende do cenário  | Gerado automaticamente pela collection ou injetado via variável            |
+| Variável        | Descrição                                     | Obrigatória           | Como é definida                                                            |
+|-----------------|-----------------------------------------------|-----------------------|----------------------------------------------------------------------------|
+| `base_url`      | URL base da API que será testada              | ✅ Sim                | Via Newman (`--env-var`) ou diretamente no environment para execução local |
+| `jwt_token`     | Token de autenticação da API                  | ⚠️ Depende do cenário | Gerado automaticamente pela collection ou injetado via variável            |
+| `user_login`    | Usuário para efetuar Login                    | ✅ Sim                | Via Newman (`--env-var`) ou diretamente no environment para execução local |
+| `pwd_login`     | Password para efetuar Login                   | ✅ Sim                | Via Newman (`--env-var`) ou diretamente no environment para execução local |
+| `user_id`       | ID do usuário cadastrado                      | ❌ Não                | Gerado automaticamente pela collection                                     |
+| `user_email`    | Email a ser cadastrado no sistema             | ✅ Sim                | Via Newman (`--env-var`) ou diretamente no environment para execução local |
+| `user_password` | Password do email a ser cadastrado no sistema | ✅ Sim                | Via Newman (`--env-var`) ou diretamente no environment para execução local |
 
 ### Exemplo de uso no Postman
 
