@@ -201,6 +201,142 @@ Nesse caso, o delay padrão é **400 ms**.
 
 ---
 
+## 🧪 Descrição dos Testes da Collection
+
+A collection **Desafio Automação API** está organizada em dois grupos principais: **Login** e **Usuários**. Cada request possui validações automáticas para garantir o correto funcionamento da API.
+
+---
+
+### 🔐 Login → `POST /login`
+
+**Objetivo:**
+Realizar autenticação do usuário e obter o token JWT para as demais requisições.
+
+**Pré-requisitos (Pre-request):**
+
+* Valida se as variáveis obrigatórias estão definidas:
+
+  * `base_url`
+  * `user_login`
+  * `pwd_login`
+
+**Testes executados:**
+
+* ✔️ Valida status HTTP **200** (login realizado com sucesso)
+* ✔️ Garante que o response body não está vazio
+* ✔️ Valida a existência do token JWT no retorno
+* ✔️ Salva o token retornado na variável de ambiente `jwt_token`
+
+---
+
+### 👥 Usuários → `GET /usuarios`
+
+**Objetivo:**
+Listar todos os usuários cadastrados na API.
+
+**Pré-requisitos:**
+
+* Verifica se a variável `base_url` está definida
+* Utiliza autenticação **Bearer Token** (`jwt_token`)
+
+**Testes executados:**
+
+* ✔️ Valida status HTTP **200**
+* ✔️ Valida que o retorno está no formato **JSON**
+
+---
+
+### 👤 Criar Usuário → `POST /usuarios`
+
+**Objetivo:**
+Criar um novo usuário no sistema.
+
+**Pré-requisitos:**
+
+* Valida se as variáveis obrigatórias estão definidas:
+
+  * `base_url`
+  * `user_name`
+  * `user_email`
+  * `user_password`
+* Autenticação via **Bearer Token**
+
+**Testes executados:**
+
+* ✔️ Valida status HTTP **201** (usuário criado com sucesso)
+* ✔️ Valida que o retorno está no formato **JSON**
+* ✔️ Garante que o response body não está vazio
+* ✔️ Valida a existência do campo `_id` do usuário
+* ✔️ Salva o `_id` do usuário criado na variável `user_id`
+
+---
+
+### 🔍 Consultar Usuário por ID → `GET /usuarios/{id}`
+
+**Objetivo:**
+Consultar os dados de um usuário específico.
+
+**Pré-requisitos:**
+
+* Valida se as variáveis obrigatórias estão definidas:
+
+  * `base_url`
+  * `user_id`
+* Autenticação via **Bearer Token**
+
+**Testes executados:**
+
+* ✔️ Valida status HTTP **200**
+* ✔️ Valida que o retorno está no formato **JSON**
+* ✔️ Garante que o response body não está vazio
+
+---
+
+### ✏️ Editar Usuário → `PUT /usuarios/{id}`
+
+**Objetivo:**
+Atualizar os dados de um usuário existente.
+
+**Pré-requisitos:**
+
+* Valida se as variáveis obrigatórias estão definidas:
+
+  * `base_url`
+  * `user_id`
+  * `user_name`
+  * `user_email`
+  * `user_password`
+* Autenticação via **Bearer Token**
+
+**Testes executados:**
+
+* ✔️ Valida status HTTP **200**
+* ✔️ Valida que o retorno está no formato **JSON**
+* ✔️ Garante que o response body não está vazio
+
+---
+
+### 🗑️ Excluir Usuário → `DELETE /usuarios/{id}`
+
+**Objetivo:**
+Remover um usuário existente do sistema.
+
+**Pré-requisitos:**
+
+* Valida se as variáveis obrigatórias estão definidas:
+
+  * `base_url`
+  * `user_id`
+* Autenticação via **Bearer Token**
+
+**Testes executados:**
+
+* ✔️ Valida status HTTP **200**
+* ✔️ Valida que o retorno está no formato **JSON**
+* ✔️ Garante que o response body não está vazio
+
+---
+
 ## 📊 Relatório de Testes
 
 * O relatório é gerado no formato **HTML**

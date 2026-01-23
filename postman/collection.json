@@ -26,9 +26,32 @@
                   "// salvar token\r",
                   "pm.environment.set(\"jwt_token\", response.token || response.authorization);\r",
                   "\r",
+                  "pm.test(\"Response body não está vazio\", function () {\r",
+                  "    pm.expect(response).to.not.be.empty;\r",
+                  "});\r",
+                  "\r",
                   "// validação token\r",
                   "pm.test(\"Token JWT gerado\", function () {\r",
                   "    pm.expect(response.authorization).to.not.be.undefined;\r",
+                  "});\r",
+                  "\r",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "const requiredVars = [\"base_url\", \"user_login\", \"pwd_login\"];\r",
+                  "\r",
+                  "requiredVars.forEach(variable => {\r",
+                  "    if (!pm.variables.get(variable)) {\r",
+                  "        throw new Error(`Variável obrigatória '${variable}' não está definida`);\r",
+                  "    }\r",
                   "});"
                 ],
                 "type": "text/javascript",
@@ -104,7 +127,11 @@
               "listen": "prerequest",
               "script": {
                 "exec": [
-                  ""
+                  "const baseUrl = pm.environment.get(\"base_url\");\r",
+                  "\r",
+                  "if (!baseUrl) {\r",
+                  "    throw new Error(\"Variável 'base_url' está nula ou não foi definida\");\r",
+                  "}"
                 ],
                 "type": "text/javascript",
                 "packages": {},
@@ -170,9 +197,33 @@
                   "});\r",
                   "\r",
                   "const response = pm.response.json();\r",
-                  "const user_id = response._id;\r",
                   "\r",
-                  "pm.environment.set(\"user_id\", user_id);"
+                  "pm.test(\"Response body não está vazio\", function () {\r",
+                  "    pm.expect(response).to.not.be.empty;\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"User ID id encontrado\", function () {\r",
+                  "    pm.expect(response).to.have.property(\"_id\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.environment.set(\"user_id\", response._id);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "const requiredVars = [\"base_url\", \"user_name\", \"user_email\", \"user_password\"];\r",
+                  "\r",
+                  "requiredVars.forEach(variable => {\r",
+                  "    if (!pm.variables.get(variable)) {\r",
+                  "        throw new Error(`Variável obrigatória '${variable}' não está definida`);\r",
+                  "    }\r",
+                  "});"
                 ],
                 "type": "text/javascript",
                 "packages": {},
@@ -201,7 +252,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"nome\": \"Fulano da Silva\",\r\n  \"email\": \"{{user_email}}\",\r\n  \"password\": \"{{user_password}}\",\r\n  \"administrador\": \"true\"\r\n}",
+              "raw": "{\r\n  \"nome\": \"{{user_name}}\",\r\n  \"email\": \"{{user_email}}\",\r\n  \"password\": \"{{user_password}}\",\r\n  \"administrador\": \"false\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -233,6 +284,29 @@
                   "\r",
                   "pm.test(\"Response é um JSON\", function () {\r",
                   "    pm.response.to.be.json;\r",
+                  "});\r",
+                  "\r",
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Response body não está vazio\", function () {\r",
+                  "    pm.expect(response).to.not.be.empty;\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "const requiredVars = [\"base_url\", \"user_id\"];\r",
+                  "\r",
+                  "requiredVars.forEach(variable => {\r",
+                  "    if (!pm.variables.get(variable)) {\r",
+                  "        throw new Error(`Variável obrigatória '${variable}' não está definida`);\r",
+                  "    }\r",
                   "});"
                 ],
                 "type": "text/javascript",
@@ -280,6 +354,29 @@
                   "\r",
                   "pm.test(\"Response é um JSON\", function () {\r",
                   "    pm.response.to.be.json;\r",
+                  "});\r",
+                  "\r",
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Response body não está vazio\", function () {\r",
+                  "    pm.expect(response).to.not.be.empty;\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "const requiredVars = [\"base_url\", \"user_id\" ,\"user_name\", \"user_email\", \"user_password\"];\r",
+                  "\r",
+                  "requiredVars.forEach(variable => {\r",
+                  "    if (!pm.variables.get(variable)) {\r",
+                  "        throw new Error(`Variável obrigatória '${variable}' não está definida`);\r",
+                  "    }\r",
                   "});"
                 ],
                 "type": "text/javascript",
@@ -309,7 +406,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n  \"nome\": \"Fulano da Silva Souza\",\r\n  \"email\": \"{{user_email}}\",\r\n  \"password\": \"{{user_password}}\",\r\n  \"administrador\": \"true\"\r\n}",
+              "raw": "{\r\n  \"nome\": \"{{user_name}}\",\r\n  \"email\": \"{{user_email}}\",\r\n  \"password\": \"{{user_password}}\",\r\n  \"administrador\": \"true\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -342,6 +439,29 @@
                   "\r",
                   "pm.test(\"Response é um JSON\", function () {\r",
                   "    pm.response.to.be.json;\r",
+                  "});\r",
+                  "\r",
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Response body não está vazio\", function () {\r",
+                  "    pm.expect(response).to.not.be.empty;\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "const requiredVars = [\"base_url\", \"user_id\"];\r",
+                  "\r",
+                  "requiredVars.forEach(variable => {\r",
+                  "    if (!pm.variables.get(variable)) {\r",
+                  "        throw new Error(`Variável obrigatória '${variable}' não está definida`);\r",
+                  "    }\r",
                   "});"
                 ],
                 "type": "text/javascript",
