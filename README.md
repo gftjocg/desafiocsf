@@ -109,6 +109,7 @@ O arquivo `postman/environment.json` contém as **variáveis necessárias para a
 | `user_login`    | Usuário para efetuar Login                    | ✅ Sim                | Via Newman (`--env-var`) ou diretamente no environment para execução local |
 | `pwd_login`     | Password para efetuar Login                   | ✅ Sim                | Via Newman (`--env-var`) ou diretamente no environment para execução local |
 | `user_id`       | ID do usuário cadastrado                      | ❌ Não                | Gerado automaticamente pela collection                                     |
+| `user_name`     | Nome do usuário a ser cadastro                | ✅ Sim                | Via Newman (`--env-var`) ou diretamente no environment para execução local |
 | `user_email`    | Email a ser cadastrado no sistema             | ✅ Sim                | Via Newman (`--env-var`) ou diretamente no environment para execução local |
 | `user_password` | Password do email a ser cadastrado no sistema | ✅ Sim                | Via Newman (`--env-var`) ou diretamente no environment para execução local |
 
