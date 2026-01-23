@@ -220,7 +220,7 @@
                   "const requiredVars = [\"base_url\", \"user_name\", \"user_email\", \"user_password\"];\r",
                   "\r",
                   "requiredVars.forEach(variable => {\r",
-                  "    if (!pm.variables.get(variable)) {\r",
+                  "    if (!pm.environment.get(variable)) {\r",
                   "        throw new Error(`Variável obrigatória '${variable}' não está definida`);\r",
                   "    }\r",
                   "});"
@@ -374,7 +374,7 @@
                   "const requiredVars = [\"base_url\", \"user_id\" ,\"user_name\", \"user_email\", \"user_password\"];\r",
                   "\r",
                   "requiredVars.forEach(variable => {\r",
-                  "    if (!pm.variables.get(variable)) {\r",
+                  "    if (!pm.environment.get(variable)) {\r",
                   "        throw new Error(`Variável obrigatória '${variable}' não está definida`);\r",
                   "    }\r",
                   "});"
