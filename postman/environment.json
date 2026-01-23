@@ -4,7 +4,7 @@
 	"values": [
 		{
 			"key": "base_url",
-			"value": "https://serverest.dev",
+			"value": "",
 			"type": "default",
 			"enabled": true
 		},
@@ -16,13 +16,13 @@
 		},
 		{
 			"key": "user_login",
-			"value": "fulano@qa.com",
+			"value": "",
 			"type": "default",
 			"enabled": true
 		},
 		{
 			"key": "pwd_login",
-			"value": "teste",
+			"value": "",
 			"type": "default",
 			"enabled": true
 		},
@@ -34,19 +34,25 @@
 		},
 		{
 			"key": "user_email",
-			"value": "jocg21@qa.com.br",
+			"value": "",
 			"type": "default",
 			"enabled": true
 		},
 		{
 			"key": "user_password",
-			"value": "teste",
+			"value": "",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "delay-request",
+			"value": "",
 			"type": "default",
 			"enabled": true
 		}
 	],
 	"color": null,
 	"_postman_variable_scope": "environment",
-	"_postman_exported_at": "2026-01-23T11:34:27.464Z",
+	"_postman_exported_at": "2026-01-23T11:50:56.966Z",
 	"_postman_exported_using": "Postman/11.81.3"
 }
