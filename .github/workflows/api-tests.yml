@@ -1,5 +1,8 @@
 name: API Tests - Postman + Newman + Allure
 
+permissions:
+  contents: write
+
 on:
   push:
     branches: [ "master" ]
