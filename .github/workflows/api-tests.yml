@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       SCRIPT_NAME: "test:report"
-      DELAY_REQUEST: ${{ github.event.inputs.delay_request || '400' }}
+      DELAY_REQUEST: ${{ github.event.inputs.delay_request }}
       NEWMAN_REPORT_FILE: "reports/newman/report/report.html"
       ALLURE_REPORT_PATH: "reports/allure/report"
       ALLURE_RESULTS_PATH: "allure-results"
@@ -46,20 +46,19 @@ jobs:
         run: npm ci
 
       - name: Execute API tests (Newman)
-        run: |
-          npm run $SCRIPT_NAME
+        run: npm run ${{ env.$SCRIPT_NAME }}
 
-      - name: 📊 Generate Allure Report
-        run: npm run allure:generate
-
-      - name: Publish Newman Report
+      - name: 📦 Publish Newman Report
         uses: actions/upload-artifact@v4
         with:
           name: report
-          path: $NEWMAN_REPORT_FILE
+          path: ${{ env.NEWMAN_REPORT_FILE }}
+
+      - name: 📊 Generate Allure Report
+        run: npm run allure:generate
 
       - name: 📦 Publish to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: $ALLURE_REPORT_PATH
+          publish_dir: ${{ env.ALLURE_REPORT_PATH }}
