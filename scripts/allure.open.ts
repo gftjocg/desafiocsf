@@ -1,5 +1,5 @@
 import { open } from '../config/allure.conf';
 
 open({
-  reportDir: 'reports/allure-report'
+  reportDir: 'reports/allure/report'
 });
