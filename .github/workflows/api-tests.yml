@@ -19,18 +19,18 @@ jobs:
   tests-api:
     runs-on: ubuntu-latest
     env:
-      SCRIPT_NAME: 'test:report'
+      SCRIPT_NAME: "test:report"
       DELAY_REQUEST: ${{ github.event.inputs.delay_request || '400' }}
-      NEWMAN_REPORT_FILE: 'reports/newman/report/report.html'
-      ALLURE_REPORT_PATH: 'reports/allure/report'
-      ALLURE_RESULTS_PATH: 'allure-results'
+      NEWMAN_REPORT_FILE: "reports/newman/report/report.html"
+      ALLURE_REPORT_PATH: "reports/allure/report"
+      ALLURE_RESULTS_PATH: "allure-results"
 
-      BASE_URL: 'https://serverest.dev'
-      USER_LOGIN: 'fulano@qa.com'
-      PWD_LOGIN: 'teste'
-      USER_NAME: 'Teste API 2'
-      USER_EMAIL: 'jocg24@qa.com.br'
-      USER_PASSWORD: 'teste'
+      BASE_URL: "https://serverest.dev"
+      USER_LOGIN: "fulano@qa.com"
+      PWD_LOGIN: "teste"
+      USER_NAME: "Teste API 2"
+      USER_EMAIL: "jocg24@qa.com.br"
+      USER_PASSWORD: "teste"
 
     steps:
       - name: Repository Checkout
@@ -39,7 +39,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: "20"
           cache: npm
 
       - name: 📦 Install Dependencies
