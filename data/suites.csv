@@ -1,7 +1,0 @@
-"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
-"","109","View User By Id","Desafio Automação API","2026-01-27","passed","2026-01-27","","usuarios","",""
-"","122","Edit User","Desafio Automação API","2026-01-27","passed","2026-01-27","","usuarios","",""
-"","102","Delete User","Desafio Automação API","2026-01-27","passed","2026-01-27","","usuarios","",""
-"","263","Views Users","Desafio Automação API","2026-01-27","passed","2026-01-27","","usuarios","",""
-"","118","Create User","Desafio Automação API","2026-01-27","passed","2026-01-27","","usuarios","",""
-"","332","Login","Desafio Automação API","2026-01-27","passed","2026-01-27","","login","",""
