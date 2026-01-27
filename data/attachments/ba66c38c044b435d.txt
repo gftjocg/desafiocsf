@@ -1,0 +1,4 @@
+{
+    "message": "Login realizado com sucesso",
+    "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImZ1bGFub0BxYS5jb20iLCJwYXNzd29yZCI6InRlc3RlIiwiaWF0IjoxNzY5NTUxMjk1LCJleHAiOjE3Njk1NTE4OTV9.uFl5r2_fJMzhLJvqf9ApM18QklnRyB-UTTpyxOrt1Xk"
+}
