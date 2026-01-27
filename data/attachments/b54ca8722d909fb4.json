@@ -1,0 +1,10 @@
+{
+    "Authorization": "Bearer Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImZ1bGFub0BxYS5jb20iLCJwYXNzd29yZCI6InRlc3RlIiwiaWF0IjoxNzY5NTUzNTY4LCJleHAiOjE3Njk1NTQxNjh9.YurUCf-91miApt2xncYO8UY2RLnUtpamU3fMajdmThg",
+    "User-Agent": "PostmanRuntime/7.39.1",
+    "Accept": "*/*",
+    "Cache-Control": "no-cache",
+    "Postman-Token": "c786359d-a8bf-45c6-8e3c-bb66d2c8b78e",
+    "Host": "serverest.dev",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Connection": "keep-alive"
+}
