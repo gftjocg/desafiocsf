@@ -24,7 +24,6 @@ jobs:
       NEWMAN_REPORT_FILE: "reports/newman/report/report.html"
       ALLURE_REPORT_PATH: "reports/allure/report"
       ALLURE_RESULTS_PATH: "allure-results"
-
       BASE_URL: "https://serverest.dev"
       USER_LOGIN: "fulano@qa.com"
       PWD_LOGIN: "teste"
@@ -42,22 +41,22 @@ jobs:
           node-version: "20"
           cache: npm
 
-      - name: 📦 Install Dependencies
+      - name: Install Dependencies
         run: npm ci
 
       - name: Execute API tests (Newman)
         run: npm run ${{ env.SCRIPT_NAME }}
 
-      - name: 📦 Publish Newman Report
+      - name: Publish Newman Report
         uses: actions/upload-artifact@v4
         with:
           name: report
           path: ${{ env.NEWMAN_REPORT_FILE }}
 
-      - name: 📊 Generate Allure Report
+      - name: Generate Allure Report
         run: npm run allure:generate
 
-      - name: 📦 Publish to GitHub Pages
+      - name: Publish to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
