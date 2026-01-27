@@ -1,8 +1,17 @@
 {
   "name": "desafiocsf",
-  "version": "1.0.0",
   "scripts": {
-    "test": "newman run postman/collection.json \\ -e postman/environment.json",
-    "test:reporter": "newman run postman/collection.json \\ -e postman/environment.json -r html --reporter-html-export reports/report.html"
+    "test": "npx ts-node scripts/test.ts",
+    "test:report": "npx ts-node scripts/test.report.ts",
+    "allure:generate": "npx ts-node scripts/allure.generate.ts",
+    "allure:open": "npx ts-node scripts/allure.open.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^25.0.10",
+    "allure-commandline": "^2.36.0",
+    "newman": "^6.2.2",
+    "newman-reporter-allure": "^3.4.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
   }
 }
