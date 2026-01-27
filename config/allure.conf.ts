@@ -1,36 +1,35 @@
 import { execSync } from 'child_process';
 
 interface AllureBaseConfig {
-  reportDir: string;
+  allureReportPath: string;
 }
 
 interface AllureGenerateConfig extends AllureBaseConfig {
-  resultsDir: string;
+  allureResultsPath: string;
 }
 
-
 export function generate({
-  resultsDir,
-  reportDir
+  allureResultsPath,
+  allureReportPath
 }: AllureGenerateConfig): void {
 
-  const command = `allure generate ${resultsDir} --clean -o ${reportDir}`;
+    const command = `allure generate ${allureResultsPath} --clean -o ${allureReportPath}`;
 
-  console.log('🚀 Generating Allure Report...');
+    console.log('🚀 Generating Allure Report...');
 
-  try {
-    execSync(command, { stdio: 'inherit' });
-  } catch (error) {
-    console.error('❌ Failed to generate Allure Report');
-    process.exit(1);
-  }
+    try {
+        execSync(command, { stdio: 'inherit' });
+    } catch (error) {
+        console.error('❌ Failed to generate Allure Report');
+        process.exit(1);
+    }
 }
 
 export function open({
-  reportDir
+  allureReportPath
 }: AllureBaseConfig): void {
 
-  const command = `allure open ${reportDir}`;
+  const command = `allure open ${allureReportPath}`;
 
   console.log('🚀 Opening Allure Report...');
 

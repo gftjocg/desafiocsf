@@ -1,13 +1,11 @@
 import { test } from '../config/test.conf';
 
 const delayRequest = process.env.DELAY_REQUEST ? Number(process.env.DELAY_REQUEST) : 400;
-const newmanReportFile = process.env.NEWMAN_REPORT_FILE || 'reports/newman/report/report.html';
-const allureResultsPath = process.env.ALLURE_RESULTS_PATH || 'allure-results';
 
 test({
   collection: 'postman/collection.json',
   environment: 'postman/environment.json',
   delayRequest: delayRequest,
-  newmanReportFile: newmanReportFile,
-  allureResultsPath: allureResultsPath
+  newmanReportFile: '',
+  allureResultsPath: ''
 });

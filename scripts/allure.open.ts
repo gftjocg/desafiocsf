@@ -1,5 +1,7 @@
 import { open } from '../config/allure.conf';
 
+const allureReportPath = process.env.ALLURE_REPORT_PATH || 'reports/allure/report';
+
 open({
-  reportDir: 'reports/allure/report'
+  allureReportPath: allureReportPath
 });
