@@ -1,0 +1,8 @@
+{
+  "name": "desafiocsf",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "newman run postman/collection.json \\ -e postman/environment.json",
+    "test:reporter": "newman run postman/collection.json \\ -e postman/environment.json -r html --reporter-html-export reports/report.html"
+  }
+}
