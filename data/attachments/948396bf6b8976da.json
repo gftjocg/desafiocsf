@@ -7,8 +7,8 @@
     "x-content-type-options": "nosniff",
     "x-xss-protection": "1; mode=block",
     "content-type": "application/json; charset=utf-8",
-    "x-cloud-trace-context": "57a80cd36a5f3ec13b756b7ee4ee50b1",
-    "date": "Tue, 27 Jan 2026 22:39:30 GMT",
+    "x-cloud-trace-context": "f8e7c307d963a9cd9d59ba2940786c01",
+    "date": "Wed, 28 Jan 2026 12:21:00 GMT",
     "server": "Google Frontend",
-    "Content-Length": "148"
+    "Content-Length": "82"
 }
