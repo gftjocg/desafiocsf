@@ -1,0 +1,6 @@
+{
+  "nome": "Teste API",
+  "email": "jocg23@qa.com.br",
+  "password": "teste",
+  "administrador": "true"
+}
