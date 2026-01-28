@@ -1,4 +1,4 @@
-# 🧪 API Tests – Postman + Newman + GitHub Actions
+# 🧪 API Tests – Postaman + Newman + GitHub Actions
 
 Este repositório contém um projeto de **testes automatizados de API** utilizando **Postman**, executado via **Newman** e integrado a uma **pipeline de CI com GitHub Actions**.
 
@@ -15,7 +15,8 @@ O objetivo do projeto é permitir a execução automática dos testes:
 * **Newman** – Executor CLI do Postman
 * **Node.js 18** – Ambiente de execução do Newman
 * **GitHub Actions** – Pipeline de Integração Contínua (CI)
-* **newman-reporter-html** – Geração de relatório HTML
+* **Newman Reporter HTML** – Geração de relatório HTML
+* **Allure Reporter** – Geração de relatório HTML
 * **YAML** – Configuração do workflow
 
 ---
@@ -24,16 +25,29 @@ O objetivo do projeto é permitir a execução automática dos testes:
 
 ```text
 .
+├── .github/
+│   └── workflows/
+│       └── api-tests.yml
+│
+├── config/
+│   ├── allure.conf.ts
+│   ├── test.conf.ts
+│
 ├── postman/
 │   ├── collection.json
 │   └── environment.json
 │
-├── .github/
-│   └── workflows/
-│       └── newman.yml
+├── scripts/
+│   ├── allure.generate.ts
+│   ├── allure.open.ts
+│   ├── test.api.ts
+│   ├── test.report.ts
 │
+├── desafiocsf.iml
+├── package.json
+├── package-lock.json
 ├── README.md
-└── desafiocsf.iml
+└── tsconfig.json
 ```
 
 ---
@@ -65,16 +79,16 @@ Os valores são injetados **em tempo de execução** pelo Newman ou pela pipelin
 
 ---
 
-### 📁 `.github/workflows/newman.yml`
+### 📁 `.github/workflows/api-tests.yml`
 
 Workflow do **GitHub Actions** responsável por:
 
 * Executar os testes automaticamente em:
 
-    * `push` na branch `master`
+    * `push` na branch `main`
     * `pull request`
     * execução manual (`workflow_dispatch`)
-* Instalar Node.js e Newman
+* Instalar Dependencias
 * Executar a collection do Postman
 * Gerar relatório HTML
 * Publicar o relatório como *artifact*
@@ -158,7 +172,8 @@ Essa abordagem é a mesma utilizada na **pipeline do GitHub Actions**.
 
 ### 1️⃣ Pré-requisitos
 
-* Node.js 18+
+* Node.js 20
+* Instalação do Newman
 * Instalação do Newman
 
 ```bash
