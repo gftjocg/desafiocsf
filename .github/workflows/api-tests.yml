@@ -27,6 +27,8 @@ jobs:
       USER_NAME: "Teste API 2"
       USER_EMAIL: "jocg24@qa.com.br"
       USER_PASSWORD: "teste"
+      NEWMAN_REPORT_FILE: 'reports/newman/report/report.html'
+      ALLURE_REPORT_PATH: 'reports/allure/report'
 
     steps:
       - name: Repository Checkout
