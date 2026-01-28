@@ -1,109 +1,72 @@
 import fs from 'fs';
 import path from 'path';
 import { execSync } from 'child_process';
+import { PostmanEnv, PostmanEnvValue } from '../helpers/interfaces/postman.interfaces';
+import { TestReportConfig, TestEnv } from '../helpers/interfaces/test.interfaces';
+import { COLLECTION, ENVIRONMENT, ENV } from '../helpers/constants';
 
-interface PostmanEnvValue {
-    key: string;
-    value: string;
-    type: string;
-    enabled: boolean;
-}
-interface PostmanEnv {
-    id?: string;
-    name: string;
-    values: PostmanEnvValue[];
-}
-interface TestBaseConfig {
-  collection?: string;
-  environment?: string;
-  delayRequest?: number;
-}
-interface TestReportConfig extends TestBaseConfig {
-  newmanReportFile?: string;
-  allureResultsPath?: string;
+function getCmd(config: TestReportConfig) : string {
+
+    let command = `newman run ${COLLECTION}`;
+
+    const tempEnvironment = replaceEnv(ENVIRONMENT);
+    if (tempEnvironment) {
+        command += ` -e ${tempEnvironment}`;
+    }
+    if (config.delayRequest && config.delayRequest > 0) {
+        command += ` --delay-request ${config.delayRequest}`;
+    }
+    let reporters = ' --reporters cli';
+    if (config.newmanReportFile) reporters += ',htmlextra';
+    if (config.allureResultsPath) reporters += ',allure';
+    if (config.newmanReportFile){
+        reporters += ` --reporter-htmlextra-export ${config.newmanReportFile}`;
+    }
+    if (config.allureResultsPath){
+        reporters += ` --reporter-allure-export ${config.allureResultsPath}`;
+    }
+    return command + reporters;
 }
 
-function replaceVariables(environment:string) : string {
+function replaceEnv(environment: string) : string {
 
-    const collectionPath = path.resolve(environment);
-    if (!fs.existsSync(collectionPath)) {
-      console.error('❌ Collection não encontrada!');
+    const envPath = path.resolve(environment);
+    if (!fs.existsSync(envPath)) {
+      console.error('❌ Environment não encontrado!');
       return "";
     }
 
     const env: PostmanEnv = JSON.parse(fs.readFileSync(environment, 'utf-8'));
-
+    if (!env.values){
+        return "";
+    }
     env.values = env.values.map((v: PostmanEnvValue) => {
-
-        switch (v.key) {
-            case "base_url":
-                v.value = process.env.BASE_URL || v.value;
-                break;
-            case "user_login":
-                v.value = process.env.USER_LOGIN || v.value;
-                break;
-            case "pwd_login":
-                v.value = process.env.PWD_LOGIN || v.value;
-                break;
-            case "user_name":
-                v.value = process.env.USER_NAME || v.value;
-                break;
-            case "user_email":
-                v.value = process.env.USER_EMAIL || v.value;
-                break;
-            case "user_password":
-                v.value = process.env.USER_PASSWORD || v.value;
-                break;
-            default:
-        }
-
-        return v;
+        if (!v.key) return v;
+        const envValue = ENV[v.key as keyof TestEnv];
+        return {
+          ...v,
+          value: envValue !== undefined ? String(envValue) : v.value
+        };
     });
 
-    const tempEnv = path.join(path.dirname(collectionPath), 'temp-environment.json');
+    const tempEnv = path.join(path.dirname(envPath), 'temp-environment.json');
     fs.writeFileSync(tempEnv, JSON.stringify(env, null, 2));
     return tempEnv;
 }
 
-export function test({
-    collection,
-    environment,
-    delayRequest,
-    newmanReportFile,
-    allureResultsPath
-}: TestReportConfig ) : void {
+export const config = {
+    command: (config: TestReportConfig): string => {
+        return getCmd(config);
+    },
+    execute:(command: string): void => {
+        console.log('🚀 Executing test...');
+        console.log(`📌 ${command}`);
 
-    const tempEnvironment = environment ? replaceVariables(environment) : "";
-
-    let command = `newman run ${collection}`;
-
-    if (tempEnvironment) {
-        command += ` -e ${tempEnvironment}`;
-    }
-    if (delayRequest && delayRequest > 0) {
-        command += ` --delay-request ${delayRequest}`;
-    }
-
-    let reporters = ' --reporters cli';
-    if (newmanReportFile){ reporters += ',htmlextra';}
-    if (allureResultsPath){ reporters += ',allure';}
-
-    if (reporters.includes("htmlextra")){
-        reporters += ` --reporter-htmlextra-export ${newmanReportFile}`;
-    }
-    if (reporters.includes("allure")){
-        reporters += ` --reporter-allure-export ${allureResultsPath}`;
-    }
-
-    command += reporters;
-
-    console.log('🚀 Executing test...');
-    console.log(`📌 ${command}`);
-
-    try {
-        execSync(command, { stdio: 'inherit' });
-    } catch (error) {
-        console.error('❌ Failed to run the test.');
-        process.exit(1);
+        try {
+            execSync(command, { stdio: 'inherit' });
+        } catch (error) {
+            console.error('❌ Failed to run the test.');
+            process.exit(1);
+        }
     }
 }

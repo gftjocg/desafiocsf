@@ -1,10 +1,9 @@
-import { COLLECTION, ENVIRONMENT, DELAY_REQUEST } from "./helpers/Constants";
-import { test } from '../config/test.conf';
+import { ENV } from "../helpers/constants";
+import { config } from '../config/test.conf';
 
-test({
-  collection: COLLECTION,
-  environment: ENVIRONMENT,
-  delayRequest: DELAY_REQUEST,
-  newmanReportFile: '',
-  allureResultsPath: ''
+const command = config.command({
+    delayRequest: ENV.delayRequest,
+    newmanReportFile: '',
+    allureResultsPath: ''
 });
+config.execute(command);

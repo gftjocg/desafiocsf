@@ -1,42 +1,30 @@
 import { execSync } from 'child_process';
+import { ALLURE_REPORT_PATH, ALLURE_RESULTS_PATH } from '../helpers/constants';
 
-interface AllureBaseConfig {
-  allureReportPath: string;
-}
 
-interface AllureGenerateConfig extends AllureBaseConfig {
-  allureResultsPath: string;
-}
+export const config = {
+    generate: (): void => {
 
-export function generate({
-  allureResultsPath,
-  allureReportPath
-}: AllureGenerateConfig): void {
+        const command = `allure generate ${ALLURE_RESULTS_PATH} --clean -o ${ALLURE_REPORT_PATH}`;
+        console.log('🚀 Generating Allure Report...');
 
-    const command = `allure generate ${allureResultsPath} --clean -o ${allureReportPath}`;
+        try {
+            execSync(command, { stdio: 'inherit' });
+        } catch (error) {
+            console.error('❌ Failed to generate Allure Report');
+            process.exit(1);
+        }
+    },
+    open: (): void => {
 
-    console.log('🚀 Generating Allure Report...');
+        const command = `allure open ${ALLURE_REPORT_PATH}`;
+        console.log('🚀 Opening Allure Report...');
 
-    try {
-        execSync(command, { stdio: 'inherit' });
-    } catch (error) {
-        console.error('❌ Failed to generate Allure Report');
-        process.exit(1);
+        try {
+            execSync(command, { stdio: 'inherit' });
+        } catch (error) {
+            console.error('❌ Failed to open Allure Report');
+            process.exit(1);
+        }
     }
-}
-
-export function open({
-  allureReportPath
-}: AllureBaseConfig): void {
-
-  const command = `allure open ${allureReportPath}`;
-
-  console.log('🚀 Opening Allure Report...');
-
-  try {
-    execSync(command, { stdio: 'inherit' });
-  } catch (error) {
-    console.error('❌ Failed to open Allure Report');
-    process.exit(1);
-  }
 }

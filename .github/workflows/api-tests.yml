@@ -21,9 +21,6 @@ jobs:
     env:
       SCRIPT_NAME: "test:report"
       DELAY_REQUEST: ${{ github.event.inputs.delay_request }}
-      NEWMAN_REPORT_FILE: "reports/newman/report/report.html"
-      ALLURE_REPORT_PATH: "reports/allure/report"
-      ALLURE_RESULTS_PATH: "allure-results"
       BASE_URL: "https://serverest.dev"
       USER_LOGIN: "fulano@qa.com"
       PWD_LOGIN: "teste"

@@ -1,22 +1,22 @@
-# 🧪 API Tests – Postaman + Newman + GitHub Actions
+# 🧪 API Tests – Postman + Newman + Allure + GitHub Actions
 
-Este repositório contém um projeto de **testes automatizados de API** utilizando **Postman**, executado via **Newman** e integrado a uma **pipeline de CI com GitHub Actions**.
+Este repositório contém um projeto de **testes automatizados de API** utilizando **Postman**, executado via **Newman**, com geração de **relatórios HTML (htmlextra)** e **Allure**, totalmente integrado a uma **pipeline de CI/CD no GitHub Actions**.
 
-O objetivo do projeto é permitir a execução automática dos testes:
+Os testes podem ser executados:
 
-* localmente (via Newman)
-* automaticamente em *push*, *pull request* ou execução manual no GitHub
+* localmente (execução manual via Node.js)
+* automaticamente via GitHub Actions (push, pull request ou execução manual)
 
 ---
 
 ## 🛠 Tecnologias Utilizadas
 
-* **Postman** – Criação e organização das collections de testes de API
+* **Postman** – Criação e manutenção das collections de testes
 * **Newman** – Executor CLI do Postman
-* **Node.js 18** – Ambiente de execução do Newman
-* **GitHub Actions** – Pipeline de Integração Contínua (CI)
-* **Newman Reporter HTML** – Geração de relatório HTML
-* **Allure Reporter** – Geração de relatório HTML
+* **Node.js 20** – Ambiente de execução
+* **TypeScript** – Tipagem e organização do código
+* **Allure Report** – Relatórios avançados de testes
+* **GitHub Actions** – Pipeline de CI/CD
 * **YAML** – Configuração do workflow
 
 ---
@@ -30,190 +30,184 @@ O objetivo do projeto é permitir a execução automática dos testes:
 │       └── api-tests.yml
 │
 ├── config/
-│   ├── allure.conf.ts
-│   ├── test.conf.ts
+│   └── allure.conf.ts
+│   └── test.conf.ts
+│
+├── helpers/
+│   ├── constants.ts
+│   └── interfaces/
+│       └── postman.interfaces.ts
+│       └── test.interfaces.ts
 │
 ├── postman/
 │   ├── collection.json
 │   └── environment.json
 │
-├── scripts/
-│   ├── allure.generate.ts
-│   ├── allure.open.ts
+├── tests/
 │   ├── test.api.ts
 │   ├── test.report.ts
+│   ├── allure.generate.ts
+│   └── allure.open.ts
 │
-├── desafiocsf.iml
+├── reports/
+│
 ├── package.json
-├── package-lock.json
-├── README.md
-└── tsconfig.json
+├── tsconfig.json
+└── README.md
 ```
 
 ---
 
-## 📄 Descrição dos Arquivos
+## 📦 Dependências do Projeto
 
-### 📁 `postman/collection.json`
-
-Collection do Postman contendo:
-
-* As requisições de API
-* Scripts de testes (`Tests`)
-* Validações de status e regras de negócio
-
-Essa collection é executada tanto localmente quanto na pipeline.
-
----
-
-### 📁 `postman/environment.json`
-
-Arquivo de *environment* do Postman.
-
-Contém **apenas as chaves das variáveis**, sem valores sensíveis, por exemplo:
-
-* `base_url`
-* `jwt_token`
-
-Os valores são injetados **em tempo de execução** pelo Newman ou pela pipeline.
-
----
-
-### 📁 `.github/workflows/api-tests.yml`
-
-Workflow do **GitHub Actions** responsável por:
-
-* Executar os testes automaticamente em:
-
-    * `push` na branch `main`
-    * `pull request`
-    * execução manual (`workflow_dispatch`)
-* Instalar Dependencias
-* Executar a collection do Postman
-* Gerar relatório HTML
-* Publicar o relatório como *artifact*
-
-#### 🔧 Parâmetro configurável
-
-O workflow aceita o parâmetro:
-
-* **`delay_request`** – Delay (em milissegundos) entre as requisições da collection
-
-Exemplo:
-
-* `400` → 400 ms entre cada request
-
-Esse parâmetro pode ser informado manualmente ao executar o workflow.
-
----
-
-
-## 🔧 Variáveis de Ambiente (Postman)
-
-O arquivo `postman/environment.json` contém as **variáveis necessárias para a execução da collection**.
-
-⚠️ **Importante:** por boas práticas de segurança, esse arquivo **não contém valores sensíveis**, apenas as chaves das variáveis. Os valores são injetados em tempo de execução (localmente ou pela pipeline).
-
-### Variáveis utilizadas
-
-| Variável        | Descrição                                     | Obrigatória           | Como é definida                                                            |
-|-----------------|-----------------------------------------------|-----------------------|----------------------------------------------------------------------------|
-| `base_url`      | URL base da API que será testada              | ✅ Sim                | Via Newman (`--env-var`) ou diretamente no environment para execução local |
-| `jwt_token`     | Token de autenticação da API                  | ⚠️ Depende do cenário | Gerado automaticamente pela collection ou injetado via variável            |
-| `user_login`    | Usuário para efetuar Login                    | ✅ Sim                | Via Newman (`--env-var`) ou diretamente no environment para execução local |
-| `pwd_login`     | Password para efetuar Login                   | ✅ Sim                | Via Newman (`--env-var`) ou diretamente no environment para execução local |
-| `user_id`       | ID do usuário cadastrado                      | ❌ Não                | Gerado automaticamente pela collection                                     |
-| `user_name`     | Nome do usuário a ser cadastro                | ✅ Sim                | Via Newman (`--env-var`) ou diretamente no environment para execução local |
-| `user_email`    | Email a ser cadastrado no sistema             | ✅ Sim                | Via Newman (`--env-var`) ou diretamente no environment para execução local |
-| `user_password` | Password do email a ser cadastrado no sistema | ✅ Sim                | Via Newman (`--env-var`) ou diretamente no environment para execução local |
-
-### Exemplo de uso no Postman
-
-Dentro da collection, as variáveis são utilizadas da seguinte forma:
-
-```text
-{{base_url}}/usuarios
-```
-
-Ou em headers:
-
-```text
-Authorization: Bearer {{jwt_token}}
-```
-
-### Execução local (opção 1 – preenchendo o environment)
-
-Para execução local simples, você pode editar o arquivo `environment.json` e preencher manualmente os valores:
+### Dependências de desenvolvimento
 
 ```json
 {
-  "key": "base_url",
-  "value": "https://serverest.dev"
+  "typescript": "^5.9.3",
+  "ts-node": "^10.9.2",
+  "@types/node": "^25.0.10",
+  "newman": "^6.2.2",
+  "newman-reporter-htmlextra": "^1.23.1",
+  "newman-reporter-allure": "^3.4.5",
+  "allure-commandline": "^2.36.0"
 }
 ```
 
-⚠️ **Não versionar tokens ou dados sensíveis.**
+---
 
-### Execução local / pipeline (opção 2 – recomendada)
+## 🔧 Variáveis de Ambiente
 
-Utilize o Newman para injetar os valores dinamicamente:
+As variáveis abaixo são utilizadas tanto na **execução local** quanto na **pipeline do GitHub Actions**.
 
-```bash
-newman run postman/collection.json \
-  -e postman/environment.json \
-  --env-var "base_url=https://serverest.dev"
-```
+| Variável              | Obrigatório | Descrição                         |
+| --------------------- |-------------| --------------------------------- |
+| `BASE_URL`            | ✅ Sim      | URL base da API                   |
+| `USER_LOGIN`          | ✅ Sim      | Usuário para login                |
+| `PWD_LOGIN`           | ✅ Sim      | Senha do usuário                  |
+| `USER_NAME`           | ✅ Sim      | Nome do usuário                   |
+| `USER_EMAIL`          | ✅ Sim      | Email do usuário                  |
+| `USER_PASSWORD`       | ✅ Sim      | Senha do usuário                  |
+| `DELAY_REQUEST`       | ✅ Sim      | Delay entre requisições (ms)      |
 
-Essa abordagem é a mesma utilizada na **pipeline do GitHub Actions**.
+> ⚠️ **Boas práticas:** nunca versione dados sensíveis. Use variáveis de ambiente ou GitHub Secrets.
 
 ---
 
-## ▶️ Executando Localmente
+## ▶️ Execução Manual (Local)
+
+### ⚠️ Atenção sobre o arquivo `environment.json`
+
+Para execução **manual/local**, é necessário **alterar diretamente o arquivo**:
+
+```text
+postman/environment.json
+```
+
+Nesse arquivo devem ser configurados os valores das variáveis utilizadas nos testes (ex: `user_login`, `pwd_login`, `user_name`, `user_email` e `user_password`.).
+
+> 🔒 **IMPORTANTE:**
+>
+> * Sempre faça um **backup** do arquivo `environment.json` antes de alterá-lo.
+> * Recomenda-se manter uma cópia como `environment.backup.json`.
+> * No uso via **pipeline**, esse arquivo **não é alterado**, pois as variáveis são sobrescritas dinamicamente.
+
+---
 
 ### 1️⃣ Pré-requisitos
 
-* Node.js 20
-* Instalação do Newman
-* Instalação do Newman
+* Node.js **20+**
+* Java (necessário para o Allure)
+
+---
+
+### 2️⃣ Instalar dependências
 
 ```bash
-npm install -g newman newman
-npm install -g newman newman-reporter-html
+npm ci
+```
+---
+### 3️⃣ Alterar os values do arquivo `environments.json`
+
+```bash
+user_login
+pwd_login
+user_name
+user_email
+user_password
 ```
 
 ---
 
-### 2️⃣ Executar a collection
+### 4️⃣ Executar os testes
 
 ```bash
-newman run postman/collection.json \
-  -e postman/environment.json \
-  --delay-request 400 \
-  -r html --reporter-html-export report.html
+npm run test:report
 ```
 
 ---
 
-## 🚀 Executando no GitHub Actions
+### 5️⃣ Gerar e abrir relatório Allure
 
-### Execução automática
-
-A pipeline roda automaticamente quando:
-
-* há `push` na branch `master`
-* há `pull request` para `master`
-
-Nesse caso, o delay padrão é **400 ms**.
+```bash
+npm run allure:generate
+npm run allure:open
+```
 
 ---
 
-### Execução manual
+
+## 🤖 Execução via GitHub Actions (Pipeline)
+
+### ⚠️ Atenção sobre variáveis de ambiente no workflow
+
+Para execução via **GitHub Actions**, as variáveis de ambiente **devem ser configuradas diretamente no arquivo**:
+
+```text
+.github/workflows/api-tests.yml
+```
+
+Nesse arquivo estão definidas as variáveis utilizadas durante a execução da pipeline, responsáveis por sobrescrever dinamicamente os valores do `environment.json` do Postman.
+
+> 🔒 **IMPORTANTE:**
+>
+> * Sempre revise e ajuste as variáveis de ambiente no `api-tests.yml` antes de executar a pipeline.
+> * Em projetos reais, recomenda-se fortemente utilizar **GitHub Secrets** para dados sensíveis.
+> * Alterações no workflow impactam todas as execuções automáticas.
+
+---
+
+### Eventos que disparam a pipeline
+
+* `push` na branch `main`
+* `pull_request` para `main`
+* execução manual (`workflow_dispatch`)
+
+### ▶️ Execução manual pelo GitHub
 
 1. Acesse a aba **Actions** do repositório
-2. Selecione o workflow **API Tests – Postman**
+2. Selecione **API Tests - Postman + Newman + Allure**
 3. Clique em **Run workflow**
-4. Informe o valor desejado para `delay_request`
+4. Informe o valor de `delay_request` (opcional)
 5. Execute
+
+---
+## 🔐 Variáveis de Ambiente no Workflow
+
+Exemplo extraído do workflow:
+
+```yaml
+env:
+  DELAY_REQUEST: ${{ github.event.inputs.delay_request }}
+  BASE_URL: "https://serverest.dev"
+  USER_LOGIN: "fulano@qa.com"
+  PWD_LOGIN: "teste"
+  USER_NAME: "Teste API"
+  USER_EMAIL: "teste@qa.com"
+  USER_PASSWORD: "teste"
+```
+
+Essas variáveis são injetadas dinamicamente e utilizadas para sobrescrever o `environment.json` do Postman.
 
 ---
 
@@ -231,12 +225,11 @@ Realizar autenticação do usuário e obter o token JWT para as demais requisiç
 **Pré-requisitos (Pre-request):**
 
 * Valida se as variáveis obrigatórias estão definidas:
-
   * `base_url`
   * `user_login`
   * `pwd_login`
+* Testes executados**
 
-**Testes executados:**
 
 * ✔️ Valida status HTTP **200** (login realizado com sucesso)
 * ✔️ Garante que o response body não está vazio
@@ -349,38 +342,29 @@ Remover um usuário existente do sistema.
 * ✔️ Valida status HTTP **200**
 * ✔️ Valida que o retorno está no formato **JSON**
 * ✔️ Garante que o response body não está vazio
-
+*
 ---
 
-## 📊 Relatório de Testes
+## 📊 Relatórios
 
-* O relatório é gerado no formato **HTML**
-* Após a execução do workflow, ele fica disponível como **artifact**
+### Newman HTML
 
-### Para baixar:
+* Gerado automaticamente
+* Publicado como **artifact** no GitHub Actions
 
-1. Abra a execução do workflow
-2. Role até **Artifacts**
-3. Faça o download do arquivo `report.html`
+### Allure Report
 
----
-
-## 🔐 Boas Práticas de Segurança
-
-* Tokens e dados sensíveis **não devem** ser versionados
-* Utilize:
-
-    * `GitHub Secrets` para credenciais
-    * `--env-var` no Newman para injeção dinâmica
+* Resultados gerados em `allure-results`
+* Relatório publicado via **GitHub Pages**
 
 ---
 
 ## 📌 Observações Finais
 
-* O projeto está preparado para fácil expansão
-
-* Pipeline simples, legível e profissional
+* O projeto segue boas práticas de CI/CD
+* As variáveis do Postman são sobrescritas dinamicamente
+* Estrutura pronta para escalar novos cenários de teste
 
 ---
 
-✍️ *Projeto de testes automatizados de API utilizando boas práticas de CI/CD.*
+✍️ *Projeto de automação de testes de API utilizando Postman, Newman, TypeScript e GitHub Actions.*

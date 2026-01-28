@@ -1,6 +1,3 @@
-import { ALLURE_REPORT_PATH } from "./helpers/Constants";
-import { open } from '../config/allure.conf';
+import { config } from '../config/allure.conf';
 
-open({
-  allureReportPath: ALLURE_REPORT_PATH
-});
+config.open();
