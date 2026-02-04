@@ -1,5 +1,5 @@
 import { execSync } from 'child_process';
-import { ALLURE_REPORT_PATH, ALLURE_RESULTS_PATH } from '../helpers/constants';
+import { ALLURE_REPORT_PATH, ALLURE_RESULTS_PATH } from '../helpers/env';
 
 
 export const config = {
