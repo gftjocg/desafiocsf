@@ -1,13 +1,12 @@
 export interface TestBaseConfig {
   delayRequest?: number;
 }
-export interface TestReportConfig extends TestBaseConfig {
-  newmanReportFile?: string;
-  allureResultsPath?: string;
+export interface TestApiConfig extends TestBaseConfig {
+  newmanReport? : boolean;
+  allureReport? : boolean;
 }
 
 export interface TestEnv {
-    delayRequest? : number;
     baseUrl: string;
     userLogin: string;
     pwdLogin: string;
