@@ -34,7 +34,7 @@ Os testes podem ser executados:
 │   └── test.conf.ts
 │
 ├── helpers/
-│   ├── constants.ts
+│   ├── env.ts
 │   └── interfaces/
 │       └── postman.interfaces.ts
 │       └── test.interfaces.ts
@@ -45,7 +45,6 @@ Os testes podem ser executados:
 │
 ├── tests/
 │   ├── test.api.ts
-│   ├── test.report.ts
 │   ├── allure.generate.ts
 │   └── allure.open.ts
 │
@@ -82,7 +81,6 @@ As variáveis abaixo são utilizadas tanto na **execução local** quanto na **p
 
 | Variável              | Obrigatório | Descrição                         |
 | --------------------- |-------------| --------------------------------- |
-| `BASE_URL`            | ✅ Sim      | URL base da API                   |
 | `USER_LOGIN`          | ✅ Sim      | Usuário para login                |
 | `PWD_LOGIN`           | ✅ Sim      | Senha do usuário                  |
 | `USER_NAME`           | ✅ Sim      | Nome do usuário                   |
@@ -96,20 +94,20 @@ As variáveis abaixo são utilizadas tanto na **execução local** quanto na **p
 
 ## ▶️ Execução Manual (Local)
 
-### ⚠️ Atenção sobre o arquivo `environment.json`
+### ⚠️ Atenção sobre o arquivo `env.ts`
 
 Para execução **manual/local**, é necessário **alterar diretamente o arquivo**:
 
 ```text
-postman/environment.json
+helpers/env.ts
 ```
 
-Nesse arquivo devem ser configurados os valores das variáveis utilizadas nos testes (ex: `user_login`, `pwd_login`, `user_name`, `user_email` e `user_password`.).
+Nesse arquivo devem ser configurados os valores das variáveis utilizadas nos testes (ex: `userLogin`, `pwdlogin`, `userName`, `userEmail` e `userPassword`.).
 
 > 🔒 **IMPORTANTE:**
 >
-> * Sempre faça um **backup** do arquivo `environment.json` antes de alterá-lo.
-> * Recomenda-se manter uma cópia como `environment.backup.json`.
+> * Sempre faça um **backup** do arquivo `env.ts` antes de alterá-lo.
+> * Recomenda-se manter uma cópia como `env.backup.ts`.
 > * No uso via **pipeline**, esse arquivo **não é alterado**, pois as variáveis são sobrescritas dinamicamente.
 
 ---
@@ -127,14 +125,14 @@ Nesse arquivo devem ser configurados os valores das variáveis utilizadas nos te
 npm ci
 ```
 ---
-### 3️⃣ Alterar os values do arquivo `environments.json`
+### 3️⃣ Alterar os values do arquivo `env.ts`
 
 ```bash
-user_login
-pwd_login
-user_name
-user_email
-user_password
+userLogin
+pwdLogin
+userName
+userEmail
+userPassword
 ```
 
 ---
@@ -142,7 +140,7 @@ user_password
 ### 4️⃣ Executar os testes
 
 ```bash
-npm run test:report
+npm run test:api
 ```
 
 ---
@@ -161,7 +159,7 @@ npm run allure:open
 
 ### ⚠️ Atenção sobre variáveis de ambiente no workflow
 
-Para execução via **GitHub Actions**, as variáveis de ambiente **devem ser configuradas diretamente no arquivo**:
+Para execução via **GitHub Actions**, as variáveis de ambiente **devem estar configuradas diretamente no arquivo**:
 
 ```text
 .github/workflows/api-tests.yml
@@ -199,12 +197,11 @@ Exemplo extraído do workflow:
 ```yaml
 env:
   DELAY_REQUEST: ${{ github.event.inputs.delay_request }}
-  BASE_URL: "https://serverest.dev"
-  USER_LOGIN: "fulano@qa.com"
-  PWD_LOGIN: "teste"
-  USER_NAME: "Teste API"
-  USER_EMAIL: "teste@qa.com"
-  USER_PASSWORD: "teste"
+  USER_LOGIN: ${{ github.event.inputs.user_login }}
+  PWD_LOGIN: ${{ github.event.inputs.pwd_login }}
+  USER_NAME: ${{ github.event.inputs.user_name }}
+  USER_EMAIL: ${{ github.event.inputs.user_email }}
+  USER_PASSWORD: ${{ github.event.inputs.user_password }}
 ```
 
 Essas variáveis são injetadas dinamicamente e utilizadas para sobrescrever o `environment.json` do Postman.
