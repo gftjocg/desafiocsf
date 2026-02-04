@@ -2,10 +2,10 @@ import fs from 'fs';
 import path from 'path';
 import { execSync } from 'child_process';
 import { PostmanEnv, PostmanEnvValue } from '../helpers/interfaces/postman.interfaces';
-import { TestReportConfig, TestEnv } from '../helpers/interfaces/test.interfaces';
-import { COLLECTION, ENVIRONMENT, ENV } from '../helpers/constants';
+import { TestApiConfig, TestEnv } from '../helpers/interfaces/test.interfaces';
+import { COLLECTION, ENVIRONMENT, DELAY_REQUEST, NEWMAN_REPORT_FILE, ALLURE_RESULTS_PATH, ENV } from '../helpers/env';
 
-function getCmd(config: TestReportConfig) : string {
+function getCmd(config: TestApiConfig) : string {
 
     let command = `newman run ${COLLECTION}`;
 
@@ -17,13 +17,13 @@ function getCmd(config: TestReportConfig) : string {
         command += ` --delay-request ${config.delayRequest}`;
     }
     let reporters = ' --reporters cli';
-    if (config.newmanReportFile) reporters += ',htmlextra';
-    if (config.allureResultsPath) reporters += ',allure';
-    if (config.newmanReportFile){
-        reporters += ` --reporter-htmlextra-export ${config.newmanReportFile}`;
+    if (config.newmanReport) reporters += ',htmlextra';
+    if (config.allureReport) reporters += ',allure';
+    if (config.newmanReport){
+        reporters += ` --reporter-htmlextra-export ${NEWMAN_REPORT_FILE}`;
     }
-    if (config.allureResultsPath){
-        reporters += ` --reporter-allure-export ${config.allureResultsPath}`;
+    if (config.allureReport){
+        reporters += ` --reporter-allure-export ${ALLURE_RESULTS_PATH}`;
     }
     return command + reporters;
 }
@@ -55,7 +55,7 @@ function replaceEnv(environment: string) : string {
 }
 
 export const config = {
-    command: (config: TestReportConfig): string => {
+    command: (config: TestApiConfig): string => {
         return getCmd(config);
     },
     execute:(command: string): void => {

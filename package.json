@@ -2,7 +2,6 @@
   "name": "desafiocsf",
   "scripts": {
     "test:api": "npx ts-node tests/test.api.ts",
-    "test:report": "npx ts-node tests/test.report.ts",
     "allure:generate": "npx ts-node tests/allure.generate.ts",
     "allure:open": "npx ts-node tests/allure.open.ts"
   },
