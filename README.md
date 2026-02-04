@@ -214,6 +214,7 @@ A collection **Desafio Automação API** está organizada em dois grupos princip
 
 ---
 
+
 ### 🔐 Login → `POST /login`
 
 **Objetivo:**
