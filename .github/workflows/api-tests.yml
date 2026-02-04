@@ -14,21 +14,40 @@ on:
         description: 'Delay entre requests (ms)'
         required: false
         default: '400'
+      user_login:
+        description: 'Usuário de login'
+        required: true
+        default: 'fulano@qa.com'
+      pwd_login:
+        description: 'Password de login'
+        required: true
+        default: 'teste'
+      user_name:
+        description: 'Nome do Usuario'
+        required: true
+        default: 'Teste API 2'
+      user_email:
+        description: 'Email do Usuario'
+        required: true
+        default: 'jocg24@qa.com.br'
+      user_password:
+        description: 'Password do Usuario'
+        required: true
+        default: 'teste'
 
 jobs:
   tests-api:
     runs-on: ubuntu-latest
     env:
-      SCRIPT_NAME: "test:report"
-      DELAY_REQUEST: ${{ github.event.inputs.delay_request }}
-      BASE_URL: "https://serverest.dev"
-      USER_LOGIN: "fulano@qa.com"
-      PWD_LOGIN: "teste"
-      USER_NAME: "Teste API 2"
-      USER_EMAIL: "jocg24@qa.com.br"
-      USER_PASSWORD: "teste"
+      SCRIPT_NAME: "test:api"
       NEWMAN_REPORT_FILE: 'reports/newman/report/report.html'
       ALLURE_REPORT_PATH: 'reports/allure/report'
+      DELAY_REQUEST: ${{ github.event.inputs.delay_request }}
+      USER_LOGIN: ${{ github.event.inputs.user_login }}
+      PWD_LOGIN: ${{ github.event.inputs.pwd_login }}
+      USER_NAME: ${{ github.event.inputs.user_name }}
+      USER_EMAIL: ${{ github.event.inputs.user_email }}
+      USER_PASSWORD: ${{ github.event.inputs.user_password }}
 
     steps:
       - name: Repository Checkout
@@ -40,23 +59,22 @@ jobs:
           node-version: "20"
           cache: npm
 
-      - name: Install Dependencies
-        run: npm ci
+      - name: Run Tests
+        run: |
+          npm ci
+          npm run ${{ env.SCRIPT_NAME }}
 
-      - name: Execute API tests (Newman)
-        run: npm run ${{ env.SCRIPT_NAME }}
-
-      - name: Upload Newman Report
+      - name: Generate Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: report
-          path: ${{ env.NEWMAN_REPORT_FILE }}
+          path: ${{env.NEWMAN_REPORT_FILE}}
 
-      - name: Generate Allure Report
+      - name: Generate Report
         run: npm run allure:generate
 
       - name: Publish to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ${{ env.ALLURE_REPORT_PATH }}
+          github_token: ${{secrets.GITHUB_TOKEN}}
+          publish_dir: ${{env.ALLURE_REPORT_PATH}}
