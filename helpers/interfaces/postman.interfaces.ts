@@ -9,3 +9,12 @@ export interface PostmanEnvValue {
     type: string;
     enabled: boolean;
 }
+
+export interface PostmanEnvTestValue {
+    baseUrl: string;
+    userLogin: string;
+    pwdLogin: string;
+    userName: string;
+    userEmail: string;
+    userPassword: string;
+}
