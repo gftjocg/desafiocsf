@@ -1,7 +1,0 @@
-{
-    "nome": "Teste API",
-    "email": "jocg23@qa.com.br",
-    "password": "teste",
-    "administrador": "false",
-    "_id": "6N9cc9xl4o1dcqN6"
-}

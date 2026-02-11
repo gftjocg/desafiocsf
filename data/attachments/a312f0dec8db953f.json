@@ -1,0 +1,14 @@
+{
+    "access-control-allow-origin": "*",
+    "x-dns-prefetch-control": "off",
+    "x-frame-options": "SAMEORIGIN",
+    "strict-transport-security": "max-age=15552000; includeSubDomains",
+    "x-download-options": "noopen",
+    "x-content-type-options": "nosniff",
+    "x-xss-protection": "1; mode=block",
+    "content-type": "application/json; charset=utf-8",
+    "x-cloud-trace-context": "a98a5173823ab759cee8bceff8380c2b",
+    "date": "Wed, 11 Feb 2026 13:03:59 GMT",
+    "server": "Google Frontend",
+    "Content-Length": "50"
+}
